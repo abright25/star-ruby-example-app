@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:9.6
+    environment:
+      POSTGRES_USER: blog
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: blog_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+  web:
+    build: .
+    command: rails server -b 0.0.0.0
+    volumes:
+      - .:/app
+    ports:
+      - "3011:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+      DATABASE_USER: blog
+      DATABASE_PASSWORD: password
+      POSTGRES_HOST: db
+      POSTGRES_USER: blog
+      POSTGRES_PASSWORD: password
+      RAILS_ENV: development
+
+volumes:
+  postgres_data:
