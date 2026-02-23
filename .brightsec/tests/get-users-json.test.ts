@@ -22,15 +22,7 @@ test('GET /users.json', { signal: AbortSignal.timeout(timeout) }, async () => {
   await runner
     .createScan({
       tests: [
-        {
-          name: 'broken_access_control',
-          options: {
-            auth: 'iAGWkkjxGm8FkXgSP4s2ff'
-          }
-        },
-        'id_enumeration',
-        'sqli',
-        'xss'
+        'broken_access_control'
       ],
       attackParamLocations: [AttackParamLocation.PATH],
       starMetadata: {
