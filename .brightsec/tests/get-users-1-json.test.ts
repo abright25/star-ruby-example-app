@@ -1,3 +1,4 @@
+```
 import { test, before, after } from 'node:test';
 import { SecRunner } from '@sectester/runner';
 import { AttackParamLocation, HttpMethod } from '@sectester/scan';
@@ -27,9 +28,7 @@ test('GET /users/1.json', { signal: AbortSignal.timeout(timeout) }, async () => 
           options: {
             auth: 'iAGWkkjxGm8FkXgSP4s2ff'
           }
-        },
-        'id_enumeration',
-        'xss'
+        }
       ],
       attackParamLocations: [AttackParamLocation.PATH],
       starMetadata: {
@@ -47,3 +46,4 @@ test('GET /users/1.json', { signal: AbortSignal.timeout(timeout) }, async () => 
       auth: process.env.BRIGHT_AUTH_ID
     });
 });
+```

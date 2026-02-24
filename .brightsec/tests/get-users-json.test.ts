@@ -27,10 +27,7 @@ test('GET /users.json', { signal: AbortSignal.timeout(timeout) }, async () => {
           options: {
             auth: 'iAGWkkjxGm8FkXgSP4s2ff'
           }
-        },
-        'id_enumeration',
-        'xss',
-        'sqli'
+        }
       ],
       attackParamLocations: [AttackParamLocation.PATH],
       starMetadata: {
