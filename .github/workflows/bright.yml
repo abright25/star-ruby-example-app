@@ -58,6 +58,4 @@ jobs:
           BRIGHT_TARGET_URL: http://127.0.0.1:3011
           SECTESTER_SCAN_POOL_SIZE: ${{ vars.SECTESTER_SCAN_POOL_SIZE }}
         run: |
-          node --experimental-transform-types --experimental-strip-types --experimental-detect-module \
-            --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning \
-            --test-force-exit --test-concurrency=4 --test .brightsec/tests/*.test.ts
+          npx ts-node --transpile-only .brightsec/tests/*.test.ts
