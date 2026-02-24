@@ -48,9 +48,6 @@ jobs:
           BRIGHT_PROJECT_ID: tJNyGeHbdMFxoBpcEGHJzH
           BRIGHT_TOKEN: ${{ secrets.BRIGHT_TOKEN }}
 
-      - name: Install ts-node
-        run: npm install --save-dev --prefix .brightsec ts-node
-
       - name: Run security tests
         env:
           BRIGHT_HOSTNAME: development.playground.brightsec.com
@@ -61,4 +58,6 @@ jobs:
           BRIGHT_TARGET_URL: http://127.0.0.1:3011
           SECTESTER_SCAN_POOL_SIZE: ${{ vars.SECTESTER_SCAN_POOL_SIZE }}
         run: |
-          npx ts-node --transpile-only .brightsec/tests/*.test.ts
+          node --experimental-transform-types --experimental-strip-types --experimental-detect-module \
+            --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning \
+            --test-force-exit --test-concurrency=4 --test .brightsec/tests/*.test.ts
