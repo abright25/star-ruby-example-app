@@ -1,10 +1,16 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :confirm_logged_in, only: [:show, :edit, :update, :destroy, :index]
+  before_action :authorize_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if current_user.admin?
+      @users = User.all
+    else
+      redirect_to root_path, alert: "You are not authorized to access this resource."
+    end
   end
 
   # GET /users/1
@@ -71,5 +77,12 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password, :password_digest, :admin)
+    end
+
+    # Ensure the current user is authorized to access the user resource
+    def authorize_user
+      unless current_user && current_user.id == @user.id
+        redirect_to root_path, alert: "You are not authorized to access this resource."
+      end
     end
 end
