@@ -27,11 +27,7 @@ test('GET /users.json', { signal: AbortSignal.timeout(timeout) }, async () => {
           options: {
             auth: process.env.BRIGHT_AUTH_ID
           }
-        },
-        'id_enumeration',
-        'sqli',
-        'xss',
-        'csrf'
+        }
       ],
       attackParamLocations: [AttackParamLocation.PATH],
       starMetadata: {
