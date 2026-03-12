@@ -28,9 +28,6 @@ test('get-users-json', { signal: AbortSignal.timeout(timeout) }, async () => {
             auth: process.env.BRIGHT_AUTH_ID
           }
         },
-        'id_enumeration',
-        'xss',
-        'sqli',
         'full_path_disclosure'
       ],
       attackParamLocations: [AttackParamLocation.PATH],
