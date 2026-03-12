@@ -1,5 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:index, :show, :edit, :update, :destroy]
+  before_action :authorize_admin, only: [:index]
+  before_action :authorize_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json
@@ -71,5 +74,20 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password, :password_digest, :admin)
+    end
+
+    # Ensure the user is authenticated
+    def authenticate_user!
+      redirect_to login_path, alert: "You need to sign in or sign up before continuing." unless current_user
+    end
+
+    # Ensure the user is an admin
+    def authorize_admin
+      redirect_to root_path, alert: "You are not authorized to access this page." unless current_user&.admin?
+    end
+
+    # Ensure the user is authorized to access the resource
+    def authorize_user
+      redirect_to root_path, alert: "You are not authorized to access this user." unless current_user == @user || current_user&.admin?
     end
 end
